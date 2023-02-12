@@ -1,7 +1,4 @@
-package org.eclipse.aether.transport.wagon;
-
-import javax.inject.Inject;
-import javax.inject.Named;
+package com.miro.maven.resolver;
 
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.repository.RemoteRepository;
@@ -10,9 +7,19 @@ import org.eclipse.aether.spi.connector.transport.TransporterFactory;
 import org.eclipse.aether.spi.locator.Service;
 import org.eclipse.aether.spi.locator.ServiceLocator;
 import org.eclipse.aether.transfer.NoTransporterException;
+import org.eclipse.aether.transport.wagon.WagonConfigurator;
+import org.eclipse.aether.transport.wagon.WagonProvider;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
- *
+ * Copy of org.eclipse.aether.transport.wagon.WagonTransporter (final, that's why not extended) from
+ * "org.apache.maven.resolver:maven-resolver-transport-wagon:1.6.3" with minor changes:
+ * <ul>
+ * <li>higher priority</li>
+ * <li>custom FailSafeWagonTransporter</li>
+ * </ul>
  */
 @Named("fail-safe-wagon")
 public final class FailSafeWagonTransporterFactory implements TransporterFactory, Service {
@@ -86,7 +93,7 @@ public final class FailSafeWagonTransporterFactory implements TransporterFactory
     @Override
     public Transporter newInstance(RepositorySystemSession session, RemoteRepository repository)
             throws NoTransporterException {
-        return new WagonTransporter(wagonProvider, wagonConfigurator, repository, session);
+        return new FailSafeWagonTransporter(wagonProvider, wagonConfigurator, repository, session);
     }
 
 }

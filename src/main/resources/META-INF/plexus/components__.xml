@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-set>
+    <components>
+        <component>
+            <role>org.eclipse.aether.spi.connector.transport.TransporterFactory</role>
+            <role-hint>default</role-hint>
+            <implementation>com.miro.maven.resolver.FailSafeWagonTransporterFactory</implementation>
+            <description />
+            <isolated-realm>false</isolated-realm>
+            <requirements>
+            </requirements>
+        </component>
+    </components>
+</component-set>
